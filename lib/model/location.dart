@@ -18,21 +18,21 @@ Future<Location?> getLocation() async {
   final status = await Permission.location.status;
   if (status.isDenied) {
     await Permission.location.request();
-  } else {
+  }
+  try {
     final locationData = await location.getLocation();
-
 
     final placeMarks = await placemarkFromCoordinates(
         double.parse(locationData.latitude.toString()),
         double.parse(locationData.longitude.toString()));
 
-
     return Location(
         name: placeMarks[3].name.toString(),
         lat: locationData.latitude.toString(),
         log: locationData.longitude.toString());
+  } catch (error) {
+    return Location(name: 'Cairo', lat: '30.3481899', log: '31.7624285');
   }
-  return Location(name: 'Cairo', lat: '30.3481899', log: '31.7624285');
 }
 
 Future<Location> getNamedLocation(String cityName) async {
