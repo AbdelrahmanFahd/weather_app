@@ -21,14 +21,12 @@ Future<Location?> getLocation() async {
   } else {
     final locationData = await location.getLocation();
 
-    print(locationData.latitude);
-    print(locationData.longitude);
 
     final placeMarks = await placemarkFromCoordinates(
         double.parse(locationData.latitude.toString()),
         double.parse(locationData.longitude.toString()));
 
-    print(placeMarks[3].name);
+
     return Location(
         name: placeMarks[3].name.toString(),
         lat: locationData.latitude.toString(),
